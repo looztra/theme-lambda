@@ -1,15 +1,17 @@
 function fish_right_prompt 
-	set -l exit_code $status
-  __tmux_prompt
-  if test $exit_code -ne 0
-    set_color red
-  else
+  if test -z "$FISH_DISABLE_RIGHT_PROMPT"
+    set -l exit_code $status
+    __tmux_prompt
+    if test $exit_code -ne 0
+      set_color red
+    else
+      set_color 666666
+    end
+    printf '%d' $exit_code
     set_color 666666
+    printf ' < %s' (date +%H:%M:%S)
+    set_color normal
   end
-  printf '%d' $exit_code
-  set_color 666666
-  printf ' < %s' (date +%H:%M:%S)
-  set_color normal
 end
 
 function __tmux_prompt
